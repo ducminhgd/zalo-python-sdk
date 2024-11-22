@@ -1,2 +1,8 @@
-# zalo-python-sdk
-SDK for Zalo
+# Zalo Python SDK
+
+## Installation
+
+```bash
+pip install zalosdk
+```
+
