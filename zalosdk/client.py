@@ -59,18 +59,23 @@ class AccessToken:
             value = 0
         self.__expires_in = int(value)
 
+
 class ZaloClient:
     __app_id: str
     __app_secret: str
     __code_verifier: str
     __code_challenge: str
     __access_token: AccessToken
+    __http_proxy: Optional[str]
+    __https_proxy: Optional[str]
 
-    def __init__(self, app_id: str = None, app_secret: str = None, code_verifier: str = None):
+    def __init__(self, app_id: str = None, app_secret: str = None, code_verifier: str = None, http_proxy: Optional[str] = None, https_proxy: Optional[str] = None):
         self.app_id = app_id
         self.app_secret = app_secret
         self.code_verifier = code_verifier
         self.code_challenge = get_code_challenge(self.code_verifier)
+        self.http_proxy = http_proxy
+        self.https_proxy = https_proxy
 
     @property
     def app_id(self) -> Optional[str]:
@@ -118,6 +123,26 @@ class ZaloClient:
     def access_token(self, value: AccessToken):
         self.__access_token = value
 
+    @property
+    def http_proxy(self) -> Optional[str]:
+        return self.__http_proxy
+
+    @http_proxy.setter
+    def http_proxy(self, value: Optional[str]):
+        if value == "" or not isinstance(value, str):
+            value = None
+        self.__http_proxy = value
+
+    @property
+    def https_proxy(self) -> Optional[str]:
+        return self.__https_proxy
+
+    @https_proxy.setter
+    def https_proxy(self, value: Optional[str]):
+        if value == "" or not isinstance(value, str):
+            value = None
+        self.__https_proxy = value
+
     def get_access_token(self, code: str) -> AccessToken:
         """
         Get access token from Zalo OAuth server.
@@ -143,7 +168,11 @@ class ZaloClient:
             headers={
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'secret_key': self.app_secret
-            }
+            },
+            proxies={
+                'http': self.http_proxy,
+                'https': self.https_proxy
+            },
         )
 
         data = response.json()
@@ -177,7 +206,11 @@ class ZaloClient:
             headers={
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'secret_key': self.app_secret
-            }
+            },
+            proxies={
+                'http': self.http_proxy,
+                'https': self.https_proxy
+            },
         )
 
         data = response.json()
@@ -215,7 +248,11 @@ class ZaloClient:
             headers={
                 'access_token': self.access_token.access_token,
                 'Content-Type': 'application/json'
-            }
+            },
+            proxies={
+                'http': self.http_proxy,
+                'https': self.https_proxy
+            },
         )
 
         return response.json()
@@ -234,7 +271,11 @@ class ZaloClient:
             headers={
                 'access_token': self.access_token.access_token,
                 'Content-Type': 'application/json'
-            }
+            },
+            proxies={
+                'http': self.http_proxy,
+                'https': self.https_proxy
+            },
         )
 
         return response.json()
@@ -249,7 +290,11 @@ class ZaloClient:
             headers={
                 'access_token': self.access_token.access_token,
                 'Content-Type': 'application/json'
-            }
+            },
+            proxies={
+                'http': self.http_proxy,
+                'https': self.https_proxy
+            },
         )
 
         return response.json()

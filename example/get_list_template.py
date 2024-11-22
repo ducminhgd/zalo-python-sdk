@@ -6,8 +6,10 @@ if __name__ == "__main__":
         app_id=os.getenv("ZALO_APP_ID"),
         app_secret=os.getenv("ZALO_SECRET_KEY"),
         code_verifier=os.getenv("ZALO_CODE_VERIFIER"),
+        http_proxy=os.getenv("ZALO_HTTP_PROXY", None),
+        https_proxy=os.getenv("ZALO_HTTPS_PROXY", None),
     )
-    
+
     # 1. Get access token from code
     print("1. Get access token from code")
     zc.access_token = zc.get_access_token(code=os.getenv("ZNS_CODE"))
