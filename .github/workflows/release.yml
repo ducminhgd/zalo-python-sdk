@@ -37,7 +37,7 @@ jobs:
       contents: read
     environment:
       name: pypi
-      url: https://pypi.org/p/zalosdk
+      url: https://pypi.org/p/zalopysdk
     steps:
       - name: Retrieve release distributions
         uses: actions/download-artifact@v4
