@@ -1,5 +1,5 @@
 import os
-from zalosdk import ZaloClient, AccessToken, ZNSTplListRequest
+from zalosdk import ZaloClient, AccessToken
 
 if __name__ == "__main__":
     zc = ZaloClient(
@@ -9,10 +9,10 @@ if __name__ == "__main__":
         http_proxy=os.getenv("ZALO_HTTP_PROXY", None),
         https_proxy=os.getenv("ZALO_HTTPS_PROXY", None),
     )
-    
+
     zc.access_token = AccessToken(
         access_token=os.getenv("ZALO_ACCESS_TOKEN"),
         refresh_token=os.getenv("ZALO_REFRESH_TOKEN"),
         expires_in=int(os.getenv("ZALO_EXPIRES_IN", 90_000)),
     )
-    print(zc.get_template_list(ZNSTplListRequest(offset=0, limit=10)))
+    print(zc.get_template_detail(os.getenv("ZNS_TEMPLATE_ID")))

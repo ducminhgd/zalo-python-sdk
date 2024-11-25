@@ -9,10 +9,8 @@ if __name__ == "__main__":
         http_proxy=os.getenv("ZALO_HTTP_PROXY", None),
         https_proxy=os.getenv("ZALO_HTTPS_PROXY", None),
     )
-    
-    zc.access_token = AccessToken(
-        access_token=os.getenv("ZALO_ACCESS_TOKEN"),
-        refresh_token=os.getenv("ZALO_REFRESH_TOKEN"),
-        expires_in=int(os.getenv("ZALO_EXPIRES_IN", 90_000)),
-    )
-    print(zc.get_template_list(ZNSTplListRequest(offset=0, limit=10)))
+
+    zc.access_token = zc.get_access_token(code=os.getenv("ZNS_CODE"))
+    print(f'access_token: {zc.access_token.access_token}')
+    print(f'refresh_token: {zc.access_token.refresh_token}')
+    print(f'expires_in: {zc.access_token.expires_in}')
