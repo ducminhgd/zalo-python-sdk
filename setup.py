@@ -1,3 +1,4 @@
+import os
 from setuptools import setup, find_packages
 
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -5,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="zalosdk",
-    version="0.1.0",
+    version=os.getenv("VERSION", "0.1.0"),
     author="Giã Dương Đức Minh",
     author_email="giaduongducminh@gmail.com",
     description="A Python SDK for Zalo API integration",
